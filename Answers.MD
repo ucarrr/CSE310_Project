@@ -6,8 +6,8 @@ Q.2) What does the git add command do?
 It tells Git that you want to include updates to a particular file in the next commit.
 
 Q.3) What does the git pull command do? 
-- The git pullcommand is used to fetch and download content from a remote repository 
-and immiediately update the local repository to match that content.
+- When there is a change in the repository we use the pull command to apply the changes to 
+our local repository.
 
 Q.4)What does the git clone commend do?
 -  The git clone command copies an existing Git repository. 
