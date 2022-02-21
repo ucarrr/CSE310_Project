@@ -10,6 +10,4 @@ Q.3) What does the git pull command do?
 our local repository.
 
 Q.4)What does the git clone commend do?
--  The git clone command copies an existing Git repository. 
-git clone is used to point to an existing repo and make a clone or copy of that repo at in a new directory,
- at another location. 
+-  Retrieves a copy or clone of a repository. Retrieves files for use elsewhere 
