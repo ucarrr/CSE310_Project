@@ -8,3 +8,8 @@ It tells Git that you want to include updates to a particular file in the next c
 Q.3) What does the git pull command do? 
 - The git pullcommand is used to fetch and download content from a remote repository 
 and immiediately update the local repository to match that content.
+
+Q.4)What does the git clone commend do?
+-  The git clone command copies an existing Git repository. 
+git clone is used to point to an existing repo and make a clone or copy of that repo at in a new directory,
+ at another location. 
