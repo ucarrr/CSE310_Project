@@ -14,7 +14,12 @@ GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(yl_channel,GPIO.IN)
  
+ledGreen = 23 
+ledRed = 24
+
 # Set each pin as an output and make it low:
+GPIO.setup(ledGreen, GPIO.OUT)
+GPIO.setup(ledRed, GPIO.OUT)
 
  
 @app.route("/") 
@@ -31,10 +36,19 @@ def action(pin, action):
  
    if pin == "dhtpin" and action == "get":
       humi, temp = dht.read_retry(dht.DHT11, DHT11_pin)  # Reading humidity and temperature
+      inttemp = int(temp)
       humi = '{0:0.1f}' .format(humi)
       temp = '{0:0.1f}' .format(temp)
       temperature = 'Temperature: ' + temp 
       humidity =  'Humidity: ' + humi
+     
+      if inttemp < 27 :
+          
+          GPIO.output(ledGreen, GPIO.HIGH)
+          GPIO.output(ledRed, GPIO.LOW)
+      else :
+          GPIO.output(ledGreen, GPIO.LOW)
+          GPIO.output(ledRed, GPIO.HIGH)
       
       
     
@@ -51,7 +65,9 @@ def action(pin, action):
      
 
     
-       
+   if pin == "pins" and action == "off":
+       GPIO.output(ledGreen, GPIO.LOW)
+       GPIO.output(ledRed, GPIO.LOW)
  
    templateData = {
    'temperature' : temperature,
