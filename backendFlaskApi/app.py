@@ -1,15 +1,44 @@
 from calendar import c
-import imp
-from flask import Flask, jsonify, request
+
+import RPi.GPIO as GPIO
+import Adafruit_DHT as dht
+from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+from sqlalchemy import create_engine 
+import mysql.connector
 from flask_marshmallow import Marshmallow
+import MySQLdb
+import time
 
+  
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/flask'
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost/flask'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+GPIO.setmode(GPIO.BCM)
+
+DHT11_pin = 14
+
+yl_channel = 21
+
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(yl_channel,GPIO.IN)
+ 
+ledGreen = 23 
+ledRed = 24
+
+# Set each pin as an output and make it low:
+GPIO.setup(ledGreen, GPIO.OUT)
+GPIO.setup(ledRed, GPIO.OUT)
+
+
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -17,24 +46,31 @@ ma = Marshmallow(app)
 
 class Articles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100))
-    body = db.Column(db.Text())
+    temperature = db.Column(db.String(100))
+    humidity = db.Column(db.Text())
+    moisture = db.Column(db.Text())
     date = db.Column(db.DateTime, default = datetime.datetime.now)
 
 
-    def __init__(self, title, body):
-        self.title = title
-        self.body = body
+    def __init__(self, temperature, humidity, moisture):
+        self.temperature = temperature
+        self.humidity = humidity
+        self.moisture = moisture
+        
+
 
 
 
 class ArticleSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'title', 'body', 'date')
+        fields = ('id', 'temperature', 'humidity','moisture', 'date')
 
 
 article_schema = ArticleSchema()
 articles_schema = ArticleSchema(many=True)
+
+
+
 
 
 @app.route('/get', methods = ['GET'])
@@ -48,13 +84,45 @@ def post_details(id):
     article = Articles.query.get(id)
     return article_schema.jsonify(article)
 
-
-@app.route('/add', methods = ['POST'])
+@app.route('/add', m)
 def add_article():
     title = request.json['title']
     body = request.json['body']
 
     articles = Articles(title, body)
+    db.session.add(articles)
+    db.session.commit()
+    return article_schema.jsonify(articles)
+
+
+@app.route('/data')
+def add_article():
+
+   
+    humi, temp = dht.read_retry(dht.DHT11, DHT11_pin)  # Reading humidity and temperature
+    inttemp = int(temp)
+    humi = '{0:0.1f}' .format(humi)
+    temp = '{0:0.1f}' .format(temp)
+    temperature = 'Temperature: ' + temp 
+    humidity =  'Humidity: ' + humi
+    
+    moisture_reading = GPIO.input(yl_channel)
+    if moisture_reading == GPIO.LOW:
+        
+        moisture = 'Sufficient Moisture.'
+         
+         
+    else:
+        moisture = 'Low moisture, irrigation needed.'
+     
+
+    
+    temperature = request.json['temperature']
+    humidity = request.json['humidity']
+    moisture = request.json['moisture']
+ 
+
+    articles = Articles(temperature, humidity, moisture)
     db.session.add(articles)
     db.session.commit()
     return article_schema.jsonify(articles)

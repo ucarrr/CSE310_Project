@@ -3,6 +3,7 @@
 {% block content %}
     <h1 class="title">{% block title %} Sensor Data {% endblock %}</h1>
     <div class="content">
+      
         {% for article in article %}
             <div class="article">
                 <p><b>#{{ article.id }}</b></p>
@@ -13,8 +14,9 @@
  
                     </div>
                 </b>
-                <p>title: {{ article.title }}</p>
-                <p>body: {{ article.body }}</p>
+                <p>temperature: {{ article.temperature }}</p>
+                <p>humidity: {{ article.humidity }}</p>
+                <p>moisture: {{ article.moisture }}</p>
                 <p class="bio">created: {{ article.date }}</p>
                
             </div>
