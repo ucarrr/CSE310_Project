@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Page</title>
+        <!-- Raphael must be included before justgage -->
+    </head>
+    <body>
+        <div>
+            <script type="text/javascript" src="path/to/raphael.min.js"></script>
+            <script type="text/javascript" src="path/to/justgage.js"></script>
+            <script>
+            var g1, g2;
+            document.addEventListener("DOMContentLoaded", function(event) {
+                g1 = new JustGage({
+                id: "g1",
+                value: {{10}},
+                valueFontColor: "yellow",
+                min: -10,
+                max: 50,
+                title: "Temperature",
+                label: "Celcius"
+            });
+                g2 = new JustGage({
+                id: "g2",
+                value: {{15}},
+                valueFontColor: "yellow",
+                min: 0,
+                max: 100,
+                title: "Humidity",
+                label: "%"
+            });
+              });
+            </script>
+            <p>
+                alt
+            </p>
+            <script>
+              var gauge = new JustGage({
+                id: "gauge", // the id of the html element
+                value: 50,
+                min: 0,
+                max: 100,
+                decimals: 2,
+                gaugeWidthScale: 0.6
+            });
+    
+    // update the value randomly
+    setInterval(() => {
+      gauge.refresh(Math.random() * 100);
+    }, 5000)
+    
+            </script>
+        </div>
+    </body>
+</html>

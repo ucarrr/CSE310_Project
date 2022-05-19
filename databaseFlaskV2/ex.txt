@@ -1,0 +1,50 @@
+@app.route("/page", methods=["POST", "GET"])
+def index():
+    
+    
+    
+    if request.method == "GET": 
+        return render_template("team_create.html") #If it is a GET request send team_create.html
+
+    elif request.method == "POST":
+
+        create_data(request.form["name"], request.form["color"]) # Calls the function create_team.
+
+        return render_template("team_suc.html")   #If it is a POST request send team_succses.html
+    
+    article = Articles.query.get(id)
+    return render_template("index.html", a=article_schema.jsonify(article))
+
+
+
+def create_data(name, color):
+    with open(path+"/Teams_Public.json") as f:
+        team = json.load(f) #Loads the team date to a var.
+
+    with open('Teams_Public.json', 'w') as outfile:
+        team_cr = {
+                    "name": name, # Adds the name of the team to a JSON
+                    "members": 0,
+                    "publicID": "",
+                    "teamColor": color, # Adds the color of the team to a JSON
+                    "games": 0,
+                    "win": 0,
+                    "kd": 0
+        },team #adds the old teams to the new team
+
+        json.dump(team_cr, outfile) #write the json file to disk
+
+
+
+
+1--> pip install flask-pymysql
+pip install flask-mysqldb
+
+
+npm install justgage --save
+
+ <form action="/add_text" method="post">
+                <label for="textv">Value:</label><br>
+                <input type="text" id="textv" name="textv" value=""><br>
+                <input type="submit" value="Submit">
+            </form> 

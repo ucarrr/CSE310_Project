@@ -1,0 +1,87 @@
+@charset "utf-8";
+
+/* CSS Document */
+body {
+	margin: 0;
+	padding: 0;
+	background: url("../images/palmtree.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.loginBox {
+	text-align: center;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 32%;
+	transform: translate(-50%, -50%);
+	border: 2px groove #31DB5F;
+	padding: 0px 50px;
+	margin: 0;
+	width: 400px;
+	height: 550px;
+	box-sizing: border-box;
+	display: block;
+
+
+}
+
+.avatar {
+	position: relative;
+	top: 2px;
+	padding: 0;
+	margin: 0;
+	/*border: 1px solid #49DF84;*/
+
+}
+
+.loginBox h2 {
+	text-align: center;
+	font-size: 30px;
+	margin: 0;
+	padding: 0 0 0px;
+	color: green;
+}
+
+.loginBox p {
+	color: green;
+	margin: 25px auto;
+	padding: 0px;
+	font-weight: bolder;
+}
+
+.loginBox input[type="text"],
+.loginBox input[type="password"],
+.loginBox input[type="email"] {
+	width: 200px;
+	height: 30px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	border-bottom: 2px solid green;
+	background: transparent;
+	color: green;
+	font-size: 16px;
+}
+
+.loginBox input[type="submit"] {
+	width: 130px;
+	height: 45px;
+	border: none;
+	outline: none;
+	border-radius: 20px;
+	background-color: #5aba9e;
+
+}
+
+.loginBox input[type="submit"]:hover {
+	cursor: pointer;
+	background-color: green;
+}
+
+.loginBox a {
+	color: green;
+	font-size: 18px;
+	line-height: 5px;
+}
