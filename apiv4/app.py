@@ -60,7 +60,7 @@ GPIO.setup(ledRed, GPIO.OUT)
 
 
 
-class Articles(db.Model):
+class SensorData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     temperature = db.Column(db.Text())
     humidity = db.Column(db.Text())
@@ -77,7 +77,7 @@ class Articles(db.Model):
 
 
 
-class ArticleSchema(ma.Schema):
+class SensorDataSchema(ma.Schema):
     class Meta:
         fields = ('id', 'temperature', 'humidity','moisture', 'date')
 
@@ -150,7 +150,7 @@ def addData():
 
 
 @app.route("/postData", methods=["POST"], strict_slashes=False)
-def add_articles():
+def postData():
     print(request)
     termheat=request.json['heat']
     print('heat: ',heat)
