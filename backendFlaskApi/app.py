@@ -84,7 +84,7 @@ def post_details(id):
     article = Articles.query.get(id)
     return article_schema.jsonify(article)
 
-@app.route('/add', m)
+@app.route('/add')
 def add_article():
     title = request.json['title']
     body = request.json['body']

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">{% block title %} Sensor Data {% endblock %}</h1>
+    <div class="content">
+      
+        {% for article in article %}
+            <div class="article">
+                <p><b>#{{ article.id }}</b></p>
+                <b>
+                    <div class="name">
+
+                      <p> id:  {{ article.id }} </p>
+ 
+                    </div>
+                </b>
+                <p>temperature: {{ article.temperature }}</p>
+                <p>humidity: {{ article.humidity }}</p>
+                <p>moisture: {{ article.moisture }}</p>
+                <p class="bio">created: {{ article.date }}</p>
+               
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

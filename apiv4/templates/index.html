@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
+    <script>
+        var jsonfile = { a };
+    </script>
+    <title>Main Page</title>
+
+    <style>
+        .title {
+            margin: 5px;
+        }
+
+        .content {
+            margin: 5px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .data {
+            flex: 20%;
+            padding: 10px;
+            margin: 5px;
+            background-color: #f3f3f3;
+            inline-size: 100%;
+        }
+
+        .bio {
+            padding: 10px;
+            margin: 5px;
+            background-color: #ffffff;
+            color: #004835;
+        }
+
+        .name a {
+            color: #00a36f;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div>
+        <nav>
+            <a href="{{ url_for('index') }}">FlaskApp</a>
+            <a href="#">Create</a>
+            <a href="#">About</a>
+        </nav>
+        <hr>
+        <div class="content">
+            {% block content %} {% endblock %}
+        </div>
+        <div>
+            <p>----------</p>
+        </div>
+        <div>
+            <h2>Data List</h2>
+            <p>
+                Hiiii
+                {{a}}
+            </p>
+            <p>
+            <table border="1" cellpadding="5" cellspacing="5">
+                {% for row in data %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+            </p>
+        </div>
+        <div>
+            <p>sdfdsf</p>
+            {% for j in data %}
+            <p>{% print(j) %}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <p>-----------------</p>
+    </div>
+
+</body>
+
+</html>
