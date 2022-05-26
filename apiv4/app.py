@@ -101,7 +101,7 @@ def pump_off():
 @app.route('/addData')
 def addData():
   
-    cur = mysql.connection.cursor()
+    
     
    
     humi, temp = dht.read_retry(dht.DHT11, DHT11_pin)  # Reading humidity and temperature
@@ -143,6 +143,13 @@ def addData():
 
 
 
+@app.route('/pumpOpen', methods = ['GET'])
+def pumpOpen():
+    GPIO.output(pump,GPIO.HIGH)
+    print("Bitki sulanıyor")
+    time.sleep(7)
+    GPIO.output(pump,GPIO.LOW)
+    
 
 @app.route('/get', methods = ['GET'])
 def get_articles():
