@@ -46,10 +46,7 @@ GPIO.setup(yl_channel,GPIO.IN)
 ledGreen = 23 
 ledRed = 24
 
-
 pump=4
-
-heat=29
 
 GPIO.setup(pump,GPIO.OUT)
 
@@ -60,7 +57,7 @@ GPIO.setup(ledRed, GPIO.OUT)
 
 
 
-class SensorData(db.Model):
+class Articles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     temperature = db.Column(db.Text())
     humidity = db.Column(db.Text())
@@ -77,7 +74,7 @@ class SensorData(db.Model):
 
 
 
-class SensorDataSchema(ma.Schema):
+class ArticleSchema(ma.Schema):
     class Meta:
         fields = ('id', 'temperature', 'humidity','moisture', 'date')
 
@@ -92,19 +89,19 @@ def pump_on():
     print("Bitki sulanıyor")
     time.sleep(3)
     GPIO.output(pump,GPIO.LOW)
+    #GPIO.output(pump,GPIO.LOW)
     
     
     
 def pump_off():
     GPIO.output(pump,GPIO.LOW)
     print("pump kapalı. Bitkinin suya ihtiyacı yok.")
-    
 
 
 @app.route('/addData')
 def addData():
   
-    
+    cur = mysql.connection.cursor()
     
    
     humi, temp = dht.read_retry(dht.DHT11, DHT11_pin)  # Reading humidity and temperature
@@ -112,13 +109,13 @@ def addData():
     humidity = '{0:0.1f}' .format(humi)
     temperature = '{0:0.1f}' .format(temp)
     
-    if inttemp < 29 :
-          
-          GPIO.output(ledGreen, GPIO.HIGH)
-          GPIO.output(ledRed, GPIO.LOW)
-    else :
+    if inttemp > 35 or inttemp < 18 :
           GPIO.output(ledGreen, GPIO.LOW)
           GPIO.output(ledRed, GPIO.HIGH)
+          
+    else :
+          GPIO.output(ledGreen, GPIO.HIGH)
+          GPIO.output(ledRed, GPIO.LOW)
 
     
     moisture_reading = GPIO.input(yl_channel)
@@ -132,30 +129,19 @@ def addData():
         moisture = 'Low moisture, irrigation needed.'
         pump_on()
      
-    
-  
+
     
     articles = Articles(temperature, humidity, moisture)
     db.session.add(articles)
     db.session.commit()
-    
+
     all_articles = Articles.query.all()
     results = articles_schema.dump(all_articles)
     
     
     return jsonify(results)
-    
-
-     
 
 
-@app.route("/postData", methods=["POST"], strict_slashes=False)
-def postData():
-    print(request)
-    termheat=request.json['heat']
-    print('heat: ',heat)
-    heat=int(termheat)
-    return 'heat: '+ termheat
 
 
 @app.route('/get', methods = ['GET'])
