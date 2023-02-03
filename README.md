@@ -1,2 +1,2 @@
-# CSE310_Project
-IoT
+# Plant Tracking App
+IOT Raspberry pi Project
